@@ -8,6 +8,7 @@ import { getPokemons } from "../features/pokemons/pokemonSlice";
 export const HomePageSearch = () => {
   const { search, page, type } = useSelector((state) => state.pokemons);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getPokemons({ page, search, type }));
   }, [page, search, type, dispatch]);

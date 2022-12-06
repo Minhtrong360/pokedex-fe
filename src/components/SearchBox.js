@@ -1,5 +1,12 @@
 import { SearchOutlined } from "@mui/icons-material";
-import { Stack, Container, Grid, Typography } from "@mui/material";
+import {
+  Stack,
+  Container,
+  Grid,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changePage, searchQuery } from "../features/pokemons/pokemonSlice";
 import { FormProvider, FTextField } from "./form";
+// import SearchIcon from "@mui/icons-material/Search";
 
 const styles = {
   container: {
@@ -59,6 +67,7 @@ export const SearchBox = () => {
   const { handleSubmit } = methods;
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
+
   const navigate = useNavigate();
   const onSubmit = () => {
     navigate(`/pokemons/search`);
@@ -88,7 +97,17 @@ export const SearchBox = () => {
                   value={content}
                   onChange={(event) => setContent(event.target.value)}
                 />
-                <SearchOutlined sx={styles.icon} />
+
+                <InputAdornment position="end">
+                  <IconButton
+                    type="submit"
+                    color="primary"
+                    aria-label="search by name"
+                  >
+                    {/* <SearchIcon /> */}
+                    <SearchOutlined sx={styles.icon} />
+                  </IconButton>
+                </InputAdornment>
               </Stack>
             </FormProvider>
             <Typography>

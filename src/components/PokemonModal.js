@@ -41,7 +41,7 @@ export default function PokemonModal({ open, setOpen }) {
 
   const onSubmit = (data) => {
     const { name, id, url, type1, type2 } = data;
-    console.log("dữ liệu gửi về", data);
+
     dispatch(addPokemon({ name, id, imgUrl: url, types: [type1, type2] }));
     navigate(`/pokemons/${id}`);
   };

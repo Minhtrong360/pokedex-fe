@@ -34,6 +34,7 @@ export const DetailPage = () => {
   }, [id, dispatch]);
 
   const weaknesses = calculateWeaknesses(pokemon?.types);
+
   return (
     <Container maxWidth="lg" disableGutters sx={styles.container}>
       <Box position="relative">
@@ -144,7 +145,6 @@ export const DetailPage = () => {
         </Box>
       </Box>
       <Box
-        container
         maxWidth="md"
         sx={{
           margin: "auto!important",

@@ -5,6 +5,7 @@ import { MainHeader } from "./MainHeader";
 import PokemonModal from "../components/PokemonModal";
 import { useState } from "react";
 import EggIcon from "@mui/icons-material/Egg";
+import AlertMsg from "../components/AlertMsg";
 
 function MainLayout() {
   const [open, setOpen] = useState(false);
@@ -12,6 +13,7 @@ function MainLayout() {
   return (
     <Stack sx={{ minHeight: "100vh" }}>
       <MainHeader />
+      <AlertMsg />
       <Outlet />
       <Box sx={{ flexGrow: 1 }} />
       <MainFooter />

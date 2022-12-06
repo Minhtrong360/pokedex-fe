@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
 import { POKEMONS_PER_PAGE } from "../../app/config";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import { sliderClasses } from "@mui/material";
 
 const pokemonTypes = [
   "bug",
@@ -58,11 +61,12 @@ export const getPokemons = createAsyncThunk(
 
 export const getPokemonById = createAsyncThunk(
   "pokemons/getPokemonById",
-  async (id, { rejectWithValue }) => {
+  async (id, { rejectWithValue }, dispatch) => {
     try {
       let url = `/pokemons/${id}`;
       const response = await apiService.get(url);
       if (!response) return rejectWithValue({ message: "No data" });
+
       return response;
     } catch (error) {
       return rejectWithValue(error);
@@ -75,11 +79,13 @@ export const addPokemon = createAsyncThunk(
   async ({ name, id, imgUrl, types }, { rejectWithValue }) => {
     try {
       let url = "/pokemons";
-      console.log("pokemon post", apiService.post(url));
-      await apiService.post(url, { name, id, url: imgUrl, types });
 
+      await apiService.post(url, { name, id, url: imgUrl, types });
+      toast.success("Created Pokemon");
       return;
     } catch (error) {
+      toast.error(error.message);
+
       return rejectWithValue(error);
     }
   }
@@ -127,6 +133,12 @@ export const pokemonSlice = createSlice({
     page: 1,
   },
   reducers: {
+    startLoading(state) {
+      state.isLoading = true;
+    },
+    stopLoading(state) {
+      state.isLoading = false;
+    },
     changePage: (state, action) => {
       if (action.payload) {
         state.page = action.payload;
@@ -136,11 +148,11 @@ export const pokemonSlice = createSlice({
     },
     typeQuery: (state, action) => {
       state.type = action.payload;
-      getPokemons(state.page, state.search, state.type);
+      getPokemons(state.type);
     },
     searchQuery: (state, action) => {
       state.search = action.payload;
-      getPokemons(state.page, state.search, state.type);
+      getPokemons(state.page, state.search);
     },
   },
   extraReducers: {
